@@ -51,12 +51,11 @@ The pipeline brought the dataset to 100% completeness using domain-informed impu
 displaced-population-analysis/
 │
 ├── README.md
-├── data/
-├── notebooks/
-├── src/
-├── outputs/
-└── requirements.txt
+└── notebooks/
+    └── displaced_population_analysis.ipynb
 ```
+
+The analysis was originally developed in Google Colab. The notebook above contains the complete, unmodified code (data loading → cleaning → feature engineering → grouping/pivoting → scaling & outlier detection → visualization). Cell outputs (charts/tables) were stripped from this file to keep it under GitHub's direct-upload size limit; run the notebook to regenerate them, or see the project's portfolio write-up for the original output screenshots.
 
 ## Skills Demonstrated
 
