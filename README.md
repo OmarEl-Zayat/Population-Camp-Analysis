@@ -21,9 +21,12 @@ The original assignment brief called for the initial cleaning step to be done in
 
 ## Dataset
 
-- 9,917 records across **Iraq, Libya, Syria, and Yemen**
-- Time range: January 2017 – November 2018
-- Columns: `Date`, `Country`, `City`, `PlaceName`, `Houses`, `Members`, `Male`, `Female`, and housing-type counts `Room`, `Flat`, `House`, `Tent`
+- **9,917 records** across **Iraq, Libya, Syria, and Yemen**
+- **Time range:** January 2017 – November 2018
+- **Original dataset:** `Population_Camp_Data.xlsx`
+- **Cleaned dataset:** `Population_Camp_Data_Cleaned.xlsx`
+- **Columns:** `Date`, `Country`, `City`, `PlaceName`, `Houses`, `Members`, `Male`, `Female`, and housing-type counts `Room`, `Flat`, `House`, `Tent`
+- **Data cleaning:** Performed using Python for data cleaning and preprocessing before the Excel-based analysis and dashboard development.
 
 ## Data Cleaning & Preprocessing
 
