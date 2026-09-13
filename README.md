@@ -1,12 +1,23 @@
-# Displaced Population Data Analysis
+# Population Camp Analysis
 
-End-to-end data analysis of a humanitarian dataset tracking housing and demographic conditions across displaced population sites in Iraq, Libya, Syria, and Yemen (Jan 2017 – Nov 2018): Python-based cleaning and exploratory analysis, followed by an Excel Power Pivot data model, DAX measures, PivotTables, and an interactive dashboard.
+End-to-end data analysis of a humanitarian dataset tracking housing and demographic conditions across displaced population sites in Iraq, Libya, Syria, and Yemen (Jan 2017 – Nov 2018): Python-based cleaning, followed by an Excel Power Pivot data model, DAX measures, PivotTables, and an interactive dashboard.
+
+> **Note on the repository name:** this README uses the project's new title, "Population Camp Analysis." The connected GitHub integration doesn't expose a repository-rename action, so the actual rename to `Population-Camp-Analysis` needs to be done manually: go to this repo's **Settings → repository name**, change it, and click Rename. GitHub automatically redirects the old URL afterward, so nothing that links here will break.
 
 ## Project Overview
 
-This project analyzes displaced-population camp data to understand how population, gender balance, and housing conditions vary across four countries and over time. The goal is to surface which countries and cities carry the largest displaced populations, which housing types dominate in each country, and how the population changed between 2017 and 2018 — information relevant to prioritizing humanitarian resources.
+This project analyzes displaced-population camp data to understand how population, gender balance, and housing conditions vary across four countries — **Iraq, Libya, Syria, and Yemen** — and over time. The goal is to surface which countries and cities carry the largest displaced populations, which housing types dominate in each country, and how the population changed between 2017 and 2018 — information relevant to prioritizing humanitarian resources.
 
-The assignment brief originally called for the initial cleaning step to be done in Excel. That step was instead completed in Python — see [Data Cleaning & Preprocessing](#data-cleaning--preprocessing) below for why and how.
+The original assignment brief called for the initial cleaning step to be done in Excel (Power Query). That step was instead completed in Python; Excel was used for the subsequent analysis and dashboard workflow. See [Project Workflow](#project-workflow) below.
+
+## Project Workflow
+
+1. **Data Cleaning & Preprocessing** — Python (`scripts/data_cleaning.py`)
+2. **Exploratory Data Analysis** — Python (`notebooks/displaced_population_analysis.ipynb`)
+3. **PivotTables & KPI Development** — Excel
+4. **Power Pivot & DAX Measures** — Excel
+5. **Dashboard Development** — Excel
+6. **Analytical Questions & Insights** — `analysis/analytical_insights.md`
 
 ## Dataset
 
@@ -16,20 +27,24 @@ The assignment brief originally called for the initial cleaning step to be done 
 
 ## Data Cleaning & Preprocessing
 
-Data was cleaned and preprocessed **using Python (pandas, NumPy)** — not Excel. This is a deliberate deviation from the original assignment brief, which specified Excel/Power Query for this step. The notebook (`notebooks/displaced_population_analysis.ipynb`) contains the actual cleaning workflow:
+Data was cleaned and preprocessed **using Python (pandas, NumPy)** — not Excel. This is a deliberate deviation from the original assignment brief, which specified Excel/Power Query for this step. The cleaning script (`scripts/data_cleaning.py`) performs:
 
-- Structural diagnostics (`df.info()`, `df.describe()`) to profile the raw columns
-- Root-cause analysis of missing values in the housing columns (`Room`, `Flat`, `House`, `Tent`), followed by domain-informed imputation with 0 — a blank in these fields represents zero units of that housing type, not a statistical placeholder
-- Date parsing and derivation of `year`, `month`, `day` fields
-- Categorical text cleaning (stripping whitespace) on `Country` and `City` to prevent duplicate labels
-- Feature engineering: `Male_Percentage`, `Female_Percentage`, `Avg_People_Per_House`, and `Dominant_Housing` (the housing type with the highest count per row)
+- Parsing `Date` to datetime, coercing invalid values to null
+- Converting `Country`, `City`, `PlaceName` to pandas' `string` dtype, and `Members`, `Male`, `Female`, `Room`, `Flat`, `House`, `Tent` to nullable numeric (`Int64`) types, coercing invalid values to null
+- Standardizing text columns (`Country`, `City`, `PlaceName`) by stripping whitespace and capitalizing
+- Filling missing values in the housing columns (`Room`, `Flat`, `House`, `Tent`) with 0 — a blank in these fields represents zero units of that housing type, not a statistical placeholder
+- Removing fully-empty rows and exact duplicate rows
+- Adding a `Member_Validation` column flagging whether `Members` equals `Male + Female` ("OK"/"Review")
+- Deriving `Year` and `Month` (month name) fields from `Date`
+- Exporting the cleaned dataset to Excel for the subsequent Power Pivot/DAX/dashboard workflow
 
-The cleaned dataset was then loaded into Excel, where **Power Query** was used to prepare it for the data model — adding `Year`/`Month` fields and a validation column checking that `Members` equals `Male + Female` — ahead of building the Power Pivot model, DAX measures, PivotTables, and dashboard described below.
+Excel was used **only** for the analysis and reporting layer that follows — not for cleaning the data.
 
-## Exploratory Analysis (Python)
+## Exploratory Data Analysis (Python)
 
-Performed in the same notebook, after cleaning:
+A separate notebook (`notebooks/displaced_population_analysis.ipynb`) performs additional exploratory analysis on the dataset:
 
+- Structural diagnostics (`df.info()`, `df.describe()`) to profile the columns
 - Grouping and pivoting by country, and by country × year
 - Min-Max scaling and Z-score standardization of `Houses`, `Members`, and `Avg_People_Per_House`
 - Outlier detection using a |Z| > 3 threshold
@@ -49,6 +64,8 @@ PivotTables were built for a country summary, a yearly trend, housing distributi
 ## Dashboard
 
 The Excel dashboard ("Population Camp Analysis — From Data to Human Impact") brings the PivotTables together into:
+
+![Population Camp Analysis Dashboard](dashboard/dashboard.png)
 
 - KPI cards for the totals and averages above
 - A clustered column chart of population by country
@@ -72,27 +89,32 @@ From the Step 6 analysis of the dashboard (full write-up in [`analysis/analytica
 
 ## Tools & Technologies
 
-- **Python** — Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn (data cleaning, feature engineering, exploratory analysis)
+- **Python** — Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn (data cleaning, preprocessing, exploratory analysis)
 - **Excel** — Power Query, Power Pivot, DAX, PivotTables/PivotCharts (data modeling, KPI measures, interactive dashboard)
 
 ## Project Structure
 
 ```
-displaced-population-analysis/
+Population-Camp-Analysis/
 │
 ├── README.md
+├── scripts/
+│   └── data_cleaning.py                      # Python data cleaning & preprocessing (source of truth)
 ├── notebooks/
-│   └── displaced_population_analysis.ipynb   # Python cleaning, feature engineering & EDA
+│   └── displaced_population_analysis.ipynb   # Exploratory analysis: scaling, outliers, visualization
 ├── analysis/
 │   └── analytical_insights.md                # Step 6 dashboard findings & interpretation
 └── dashboard/
-    └── README.md                             # Dashboard KPIs, breakdowns, and visuals
+    ├── README.md                             # Dashboard KPIs, breakdowns, and visuals
+    └── dashboard.png                         # Dashboard screenshot (add manually — see note below)
 ```
 
-The Python analysis was originally developed in Google Colab; the notebook above contains the complete, unmodified code (data loading → cleaning → feature engineering → grouping/pivoting → scaling & outlier detection → visualization). Cell outputs (charts/tables) were stripped from this file to keep it under GitHub's direct-upload size limit; run the notebook to regenerate them.
+The exploratory notebook was originally developed in Google Colab; it contains the complete, unmodified code (grouping/pivoting → scaling & outlier detection → visualization). Cell outputs (charts/tables) were stripped from this file to keep it under GitHub's direct-upload size limit; run the notebook to regenerate them.
 
-The final Excel workbook (raw data, Power Query steps, Data Model, PivotTables, and dashboard) is not included directly in this repository — see the note in [`dashboard/README.md`](dashboard/README.md).
+The final Excel workbook (cleaned data, Power Pivot model, PivotTables, and dashboard) is not included directly in this repository — see the note in [`dashboard/README.md`](dashboard/README.md) for why and how to add it yourself if you'd like it included.
+
+**Note on the dashboard image:** `dashboard/dashboard.png` needs to be added manually — see [`dashboard/README.md`](dashboard/README.md) for details.
 
 ## Skills Demonstrated
 
-Data Cleaning, Feature Engineering, Exploratory Data Analysis, Data Aggregation & Pivoting, Feature Scaling, Outlier Detection, Data Visualization, Power Query, Power Pivot & DAX, Dashboard Design, KPI Reporting
+Data Cleaning, Data Preprocessing, Exploratory Data Analysis, Data Aggregation & Pivoting, Feature Scaling, Outlier Detection, Data Visualization, Power Query, Power Pivot & DAX, Dashboard Design, KPI Reporting
