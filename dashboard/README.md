@@ -2,7 +2,14 @@
 
 The final Excel workbook (`Population_Clean` table → Data Model → PivotTables → Dashboard) contains an interactive dashboard titled **"Population Camp Analysis — From Data to Human Impact"** covering 2017–2018.
 
-> **Note:** The dashboard screenshot (`dashboard_screenshot.jpg`) and the full Excel workbook (with the PivotTables, DAX measures, and dashboard) could not be uploaded through the connected GitHub integration used for this update, since it only reliably transfers text-based files. Please add these two files to this folder directly on GitHub (drag-and-drop upload works well for this). The values below were read directly from the workbook so the write-up doesn't depend on the files being present.
+> **Note:** The dashboard screenshot (`dashboard.png`) and the full Excel workbook could not be uploaded through the connected GitHub integration used for this update. That integration only writes text content — confirmed by testing it directly — so binary files (images, `.xlsx`) can't be transferred through it without corruption. Please add the following two files to this folder directly on GitHub (drag-and-drop upload on the repo page works well for this):
+>
+> - `dashboard/dashboard.png` — the dashboard screenshot (once added, it will render automatically in this file and in the main README)
+> - `dashboard/population_camp_data_Clean.xlsx` — the full workbook, if you'd like it included as a portfolio deliverable (it's a reasonable size at ~2.4 MB)
+>
+> The values below were read directly from the workbook, so this write-up doesn't depend on either file being present.
+
+![Population Camp Analysis Dashboard](dashboard.png)
 
 ## KPI Measures (DAX)
 
