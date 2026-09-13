@@ -98,6 +98,9 @@ From the Step 6 analysis of the dashboard (full write-up in [`analysis/analytica
 Population-Camp-Analysis/
 │
 ├── README.md
+├── data/
+│   ├── Population_Camp_Data.xlsx
+│   └── Population_Camp_Data_Cleaned.xlsx
 ├── scripts/
 │   └── data_cleaning.py                      # Python data cleaning & preprocessing (source of truth)
 ├── notebooks/
@@ -106,7 +109,7 @@ Population-Camp-Analysis/
 │   └── analytical_insights.md                # Step 6 dashboard findings & interpretation
 └── dashboard/
     ├── README.md                             # Dashboard KPIs, breakdowns, and visuals
-    └── dashboard.png                         # Dashboard screenshot (add manually — see note below)
+    └── dashboard.png                         # Final dashboard screenshot
 ```
 
 The exploratory notebook was originally developed in Google Colab; it contains the complete, unmodified code (grouping/pivoting → scaling & outlier detection → visualization). Cell outputs (charts/tables) were stripped from this file to keep it under GitHub's direct-upload size limit; run the notebook to regenerate them.
