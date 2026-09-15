@@ -2,8 +2,6 @@
 
 End-to-end data analysis of a humanitarian dataset tracking housing and demographic conditions across displaced population sites in Iraq, Libya, Syria, and Yemen (Jan 2017 – Nov 2018): Python-based cleaning, followed by an Excel Power Pivot data model, DAX measures, PivotTables, and an interactive dashboard.
 
-> **Note on the repository name:** this README uses the project's new title, "Population Camp Analysis." The connected GitHub integration doesn't expose a repository-rename action, so the actual rename to `Population-Camp-Analysis` needs to be done manually: go to this repo's **Settings → repository name**, change it, and click Rename. GitHub automatically redirects the old URL afterward, so nothing that links here will break.
-
 ## Project Overview
 
 This project analyzes displaced-population camp data to understand how population, gender balance, and housing conditions vary across four countries — **Iraq, Libya, Syria, and Yemen** — and over time. The goal is to surface which countries and cities carry the largest displaced populations, which housing types dominate in each country, and how the population changed between 2017 and 2018 — information relevant to prioritizing humanitarian resources.
